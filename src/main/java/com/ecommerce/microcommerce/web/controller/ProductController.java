@@ -33,17 +33,11 @@ public class ProductController {
     @RequestMapping(value = "/Produits", method = RequestMethod.GET)
 
     public MappingJacksonValue listeProduits() {
-
         Iterable<Product> produits = productDao.findAll();
-
         SimpleBeanPropertyFilter monFiltre = SimpleBeanPropertyFilter.serializeAllExcept("prixAchat");
-
         FilterProvider listDeNosFiltres = new SimpleFilterProvider().addFilter("monFiltreDynamique", monFiltre);
-
         MappingJacksonValue produitsFiltres = new MappingJacksonValue(produits);
-
         produitsFiltres.setFilters(listDeNosFiltres);
-
         return produitsFiltres;
     }
 
@@ -83,6 +77,11 @@ public class ProductController {
         return ResponseEntity.created(location).build();
     }
 
+    @GetMapping(value = "/Produits/trie")
+    public List<Product> trierProduitsParOrdreAlphabetique(){
+        return productDao.trierProduitsParOrdreAlphabetique();
+    }
+
     @DeleteMapping (value = "/Produits/{id}")
     public void supprimerProduit(@PathVariable int id) {
 
@@ -102,6 +101,7 @@ public class ProductController {
 
         return productDao.chercherUnProduitCher(400);
     }
+
 
 
 
