@@ -85,8 +85,13 @@ public class ProductController {
     }
 
     @GetMapping(value = "/Produits/trie")
-    public List<Product> trierProduitsParOrdreAlphabetique(){
-        return productDao.trierProduitsParOrdreAlphabetique();
+    public MappingJacksonValue trierProduitsParOrdreAlphabetique(){
+        Iterable<Product> produits =  productDao.trierProduitsParOrdreAlphabetique();
+        SimpleBeanPropertyFilter monFiltre = SimpleBeanPropertyFilter.serializeAllExcept("prixAchat");
+        FilterProvider listDeNosFiltres = new SimpleFilterProvider().addFilter("monFiltreDynamique", monFiltre);
+        MappingJacksonValue produitsFiltres = new MappingJacksonValue(produits);
+        produitsFiltres.setFilters(listDeNosFiltres);
+        return produitsFiltres;
     }
 
     @DeleteMapping (value = "/Produits/{id}")
