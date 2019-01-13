@@ -1,7 +1,10 @@
 package com.ecommerce.microcommerce;
 
+import com.ecommerce.microcommerce.web.controller.ProductController;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -9,8 +12,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class MicrocommerceApplicationTests {
 
+	@Autowired
+	private ProductController controller;
+
 	@Test
 	public void contextLoads() {
+		Assert.assertNotNull(controller);
 	}
-
 }
