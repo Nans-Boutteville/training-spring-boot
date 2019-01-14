@@ -23,8 +23,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -87,7 +86,8 @@ public class ProductControllerTest {
         given(productDao.findAll()).willReturn(listeProduits);
         mockMvc.perform(get("/AdminProduits")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(content().string("[\"Product{id=1, nom='tablette', prix=250}:50\",\"Product{id=2, nom='Ordinateur Gamer', prix=1400}:0\"]"));
     }
 
     @Test
